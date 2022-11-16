@@ -43,8 +43,10 @@ namespace Movies.Client
                 options.ClientSecret = "secret";
                 options.ResponseType = "code id_token";
 
-                options.Scope.Add("openid");
-                options.Scope.Add("profile");
+                //options.Scope.Add("openid");
+                //options.Scope.Add("profile");
+                options.Scope.Add("address");
+                options.Scope.Add("email");
                 options.Scope.Add("movieAPI");
 
                 options.SaveTokens = true;

@@ -1,4 +1,6 @@
-﻿using IdentityModel.Client;
+﻿using IdentityModel;
+using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -48,10 +50,19 @@ namespace Movies.Client
                 options.Scope.Add("address");
                 options.Scope.Add("email");
                 options.Scope.Add("movieAPI");
+                options.Scope.Add("roles");
+
+                options.ClaimActions.MapUniqueJsonKey("role", "role");
 
                 options.SaveTokens = true;
 
                 options.GetClaimsFromUserInfoEndpoint = true;
+
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    NameClaimType = JwtClaimTypes.GivenName,
+                    RoleClaimType = JwtClaimTypes.Role
+                };
             });
 
             services.AddTransient<AuthenticationDelegatingHandler>();
